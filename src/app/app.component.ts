@@ -9,6 +9,7 @@ import { MenuPage } from '../pages/menu/menu';
 import { ContactPage } from '../pages/contact/contact';
 
 
+
 @Component({
   templateUrl: 'app.html'
 })
