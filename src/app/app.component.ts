@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Inject } from '@angular/core';
 import { Nav, Platform, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -10,7 +10,7 @@ import { MenuPage } from '../pages/menu/menu';
 import { ContactPage } from '../pages/contact/contact';
 import { FavoritesPage } from '../pages/favorites/favorites';
 import { ReservationPage } from '../pages/reservation/reservation';
-
+import { CommentPage } from '../pages/comment/comment';
 
 @Component({
   templateUrl: 'app.html'
@@ -33,7 +33,7 @@ export class MyApp {
       { title: 'Menu', icon: 'list-box', component: MenuPage },
       { title: 'Contact Us', icon: 'contact', component: ContactPage },
       { title: 'Favorites', icon: 'heart', component: FavoritesPage },
-
+      
     ];
 
   }
@@ -46,9 +46,8 @@ export class MyApp {
       this.splashScreen.hide();
     });
   }
-  
-  openReserve() {
 
+  openReserve() {
     let modal = this.modalCtrl.create(ReservationPage);
     modal.present();
   }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 /**
  * Generated class for the ReservationPage page.
@@ -31,7 +31,7 @@ reservation: FormGroup;
   dismiss() {
     this.viewCtrl.dismiss();
   }
-  
+
   onSubmit() {
     console.log(this.reservation.value);
     this.viewCtrl.dismiss();

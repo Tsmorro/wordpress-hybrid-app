@@ -1,7 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';import { Dish } from '../../shared/dish';
+import { IonicPage, NavController, NavParams, ToastController, ActionSheetController, ModalController } from 'ionic-angular';
+import { Dish } from '../../shared/dish';
 import { Comment } from '../../shared/comment';
 import { FavoriteProvider } from '../../providers/favorite/favorite';
+import { CommentPage } from '../../pages/comment/comment';
 
 /**
  * Generated class for the DishdetailPage page.
@@ -22,10 +24,12 @@ export class DishdetailPage {
   favorite: boolean;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams,public actionSheetController: ActionSheetController,
     @Inject('BaseURL') private BaseURL,
+    public modalCtrl: ModalController,
     private favoriteservice: FavoriteProvider,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private actionsheetCtrl: ActionSheetController) {
     this.dish = navParams.get('dish');
     this.favorite = favoriteservice.isFavorite(this.dish.id);
     this.numcomments = this.dish.comments.length;
@@ -37,12 +41,43 @@ export class DishdetailPage {
       position: 'middle',
       duration: 3000}).present();
   }
+  openComment() {
+    let modal = this.modalCtrl.create(CommentPage);
+    modal.present();
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionsheetCtrl.create({
+      title: 'More',
+      buttons: [{
+        text: 'Add a Comment',
+        icon: 'chatboxes',
+        handler: () => {
+          this.openComment();
+          console.log('Comment clicked');
+        }
+      }, {
+        text: 'Add to Favorites',
+        icon: 'heart',
+        handler: () => {
+            console.log('Adding to Favorites', this.dish.id);
+            this.favorite = this.favoriteservice.addFavorite(this.dish.id);
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  } 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DishdetailPage');
   }
-
-  
 
   addToFavorites() {
     console.log('Adding to Favorites', this.dish.id);
